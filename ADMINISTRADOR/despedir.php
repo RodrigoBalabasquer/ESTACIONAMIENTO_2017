@@ -4,23 +4,47 @@
 	  
 		<meta charset="UTF-8">
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+		<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+        <script type="text/javascript">
+            function eliminar()
+            {   
+                var opcion = "Eliminar";
+				$.ajax(
+			{
+				type: 'POST',
+				url: 'administracion.php',
+				dataType: 'text',
+                data:"Legajo="+$("#legajo").val()+"&opcion="+opcion,
+				async:true
+			})
+			.done(function(resultado)
+			{	
+				$("#div").html(resultado);
+                
+            })
+			.fail(function (jqXHR, textStatus, errorThrown)
+            {
+			    alert(jqXHR.responseText + "\n" + textStatus + "\n" + errorThrown);
+			});
+
+            }
+        
+        </script>
  </head>
 <body>
 	<a class="btn btn-info" href="../Administrar.php">Menu principal</a>
-<?php     
-	//require_once("clases\producto.php");
-?>
 	<div class="container">
 	
 		<div class="page-header">
 			<h1>Empleados</h1>      
 		</div>
 		<div class="CajaInicio animated bounceInRight">
-			<form id="FormIngreso" method="post" enctype="multipart/form-data" action="administracion.php" >
-				<input type="text" name="legajo" placeholder="Ingrese legajo"/> 
-                <input type="submit" class="btn btn-primary" name="eliminar" />
-			</form>
-		
+			<input type="text" id="legajo" placeholder="Ingrese legajo"/> 
+        	<input type="button" class="btn btn-primary" value="Despedir" onclick="eliminar()"  />
+		</div>
+		<div id="div">
+
 		</div>
 	</div>
 </body>

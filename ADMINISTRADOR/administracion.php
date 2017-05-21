@@ -1,28 +1,25 @@
 <?php
 require_once ("../Personal.php");
 
-if(isset($_POST["guardar"])) 
+if($_POST["opcion"] == "Agregar")
 {
 
-	$p = new Personal($_POST['nombre'],$_POST['apellido'],null,$_POST['contraseña'],$_POST['edad']);
+	$p = new Personal($_POST['Nombre'],$_POST['Apellido'],null,$_POST['PASSWORD'],$_POST['Edad']);
 			
     if(!Personal::GuardarBaseDatos($p))
     {
-        $mensaje = "Lamentablemente ocurrio un error y no se pudo ingresar el empleado.";
-        echo $mensaje;
+        echo "Lamentablemente ocurrio un error y no se pudo ingresar el empleado.";
         echo "  <a class='btn btn-info' href='../Administrar.php'>Menu principal</a>";
     }
     else
     {
-        $mensaje = "El empleado fue ingresado correctamente.";
-        echo $mensaje;
-        echo "  <a class='btn btn-info' href='../Administrar.php'>Menu principal</a>";
-    }
+        echo "El empleado fue ingresado correctamente.";
+	}
 }
-if(isset($_POST["eliminar"])) 
+if($_POST["opcion"] == "Eliminar") 
 {
 	$ArrayEmpleados = Personal::TraerTodosLosEmpleados();
-	$indice = Personal:: ObtenerIndice($ArrayEmpleados,$_POST["legajo"]);
+	$indice = Personal:: ObtenerIndice($ArrayEmpleados,$_POST["Legajo"]);
 	if($indice == -1)
 	{
 		$mensaje = "El legajo que ingreso no se encuentra";
@@ -33,16 +30,12 @@ if(isset($_POST["eliminar"]))
 	{	
 		if(!Personal::BorrarBaseDatos($ArrayEmpleados[$indice]))
 		{   
-            $mensaje = "No se pudo quitar al empleado";
-			echo $mensaje;
-            echo "  <a class='btn btn-info' href='../Administrar.php'>Menu principal</a>";
-		}
+            echo "No se pudo quitar al empleado";
+        }
 		else
 		{   
-             $mensaje = "Empleado eliminado exitosamente";
-			echo $mensaje;
-            echo "  <a class='btn btn-info' href='../Administrar.php'>Menu principal</a>";
-		}	
+            echo "Empleado eliminado exitosamente";
+        }	
 	}
 }
 

@@ -25,11 +25,14 @@
                 break;
             }
         }
-
-        session_start();
-        $_SESSION["Nombre"] = $_POST["Nombre"];
-        $_SESSION["Apellido"] = $_POST["Apellido"];
-        $_SESSION["Contraseña"] = $_POST['PASSWORD'];
+        if($resultado != "No encontrado")
+        {
+            session_start();
+            $_SESSION["Nombre"] = $_POST["Nombre"];
+            $_SESSION["Apellido"] = $_POST["Apellido"];
+            $_SESSION["Contraseña"] = $_POST['PASSWORD'];
+            $_SESSION["Legajo"] = $per->getLegajo();
+        }
     }
     
     echo $resultado;
