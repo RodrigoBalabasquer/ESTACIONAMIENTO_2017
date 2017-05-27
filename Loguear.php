@@ -4,28 +4,36 @@
     if($_POST['opcion'] == "Login")
     {
         $resultado = "No encontrado";
-        include_once "Personal.php";
+        include_once "CLASES/Personal.php";
         $Pdo = new PDO("mysql:host=localhost;dbname=tp-estacionamiento","root","");
 		$PdoST = $Pdo->prepare("SELECT * FROM personal WHERE 1");
     	$PdoST->execute();
 		foreach($PdoST as $registro) //devuelve los valores de la base fila por fila
 		{	
-			$ListaDePersonal[] = new Personal($registro['Nombre'],$registro['Apellido'],$registro['Legajo'],$registro['Contrasenia'],$registro['Edad']);
+			$ListaDePersonal[] = new Personal($registro['Nombre'],$registro['Apellido'],$registro['Legajo'],$registro['Contrasenia'],$registro['Edad'],$registro['Estado']);
         }
 
         foreach ($ListaDePersonal as $per)
         {
             if($per->getNombre() == $_POST["Nombre"] && $per->getApellido() == $_POST["Apellido"] && $per->getContrasenia() == $_POST["PASSWORD"])
             {   
-                $resultado ="Empleado";                
-                if($per->getLegajo() == 1)
+                if($per->getEstado() == "Activo")
                 {
-                    $resultado = "Aministrador";
+                    $resultado ="Empleado";                
+                    if($per->getLegajo() == 1)
+                    {
+                        $resultado = "Aministrador";
+                    }
+                    break;
                 }
-                break;
+                else
+                {
+                    $resultado = "Suspendido";
+                    break;
+                }
             }
         }
-        if($resultado != "No encontrado")
+        if($resultado != "No encontrado" && $resultado != "Suspendido")
         {
             session_start();
             $_SESSION["Nombre"] = $_POST["Nombre"];

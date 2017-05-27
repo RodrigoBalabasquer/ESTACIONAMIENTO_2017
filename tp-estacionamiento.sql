@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-05-2017 a las 23:00:23
+-- Tiempo de generación: 27-05-2017 a las 18:37:10
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -25,6 +25,19 @@ USE `tp-estacionamiento`;
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `cocheras`
+--
+
+CREATE TABLE `cocheras` (
+  `id` int(11) NOT NULL,
+  `Cochera` varchar(30) NOT NULL,
+  `Caracteristica` varchar(30) NOT NULL,
+  `Cantidad` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `empleados`
 --
 
@@ -36,15 +49,20 @@ CREATE TABLE `empleados` (
   `Dia` int(11) DEFAULT NULL,
   `Mes` int(11) DEFAULT NULL,
   `Anio` int(11) DEFAULT NULL,
-  `CantidadOperaciones` int(11) DEFAULT NULL
+  `CantidadOperaciones` int(11) DEFAULT NULL,
+  `id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `empleados`
 --
 
-INSERT INTO `empleados` (`Legajo`, `Nombre`, `Apellido`, `Turno`, `Dia`, `Mes`, `Anio`, `CantidadOperaciones`) VALUES
-(3, 'leonardo', 'orlando', 'noche', 21, 5, 2017, 0);
+INSERT INTO `empleados` (`Legajo`, `Nombre`, `Apellido`, `Turno`, `Dia`, `Mes`, `Anio`, `CantidadOperaciones`, `id`) VALUES
+(7, 'matias', 'binevies', 'noche', 26, 5, 2017, 1, 1),
+(7, 'matias', 'binevies', 'tarde', 26, 5, 2017, 1, 4),
+(8, 'david', 'pinel', 'tarde', 26, 5, 2017, 2, 5),
+(8, 'david', 'pinel', 'tarde', 26, 5, 2017, 1, 6),
+(7, 'matias', 'binevies', 'noche', 26, 5, 2017, 1, 7);
 
 -- --------------------------------------------------------
 
@@ -56,44 +74,58 @@ CREATE TABLE `estacionamiento` (
   `Piso` int(11) NOT NULL,
   `Cochera` varchar(30) NOT NULL,
   `Condicion` varchar(30) NOT NULL,
-  `Estado` varchar(30) NOT NULL
+  `Estado` varchar(30) NOT NULL,
+  `Cantidad` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `estacionamiento`
 --
 
-INSERT INTO `estacionamiento` (`Piso`, `Cochera`, `Condicion`, `Estado`) VALUES
-(1, 'P1A', 'DISCAPACITADO', 'Disponible'),
-(1, 'P1B', 'DISCAPACITADO', 'Disponible'),
-(1, 'P1C', 'DISCAPACITADO', 'Disponible'),
-(1, 'P1D', 'NORMAL', 'Disponible'),
-(1, 'P1E', 'NORMAL', 'Disponible'),
-(1, 'P1F', 'NORMAL', 'Disponible'),
-(1, 'P1G', 'NORMAL', 'Disponible'),
-(1, 'P1H', 'NORMAL', 'Disponible'),
-(1, 'P1I', 'NORMAL', 'Disponible'),
-(1, 'P1J', 'NORMAL', 'Ocupado'),
-(2, 'P2A', 'NORMAL', 'Disponible'),
-(2, 'P2B', 'NORMAL', 'Disponible'),
-(2, 'P2C', 'NORMAL', 'Disponible'),
-(2, 'P2D', 'NORMAL', 'Disponible'),
-(2, 'P2E', 'NORMAL', 'Disponible'),
-(2, 'P2F', 'NORMAL', 'Disponible'),
-(2, 'P2G', 'NORMAL', 'Disponible'),
-(2, 'P2H', 'NORMAL', 'Disponible'),
-(2, 'P2I', 'NORMAL', 'Disponible'),
-(2, 'P2J', 'NORMAL', 'Disponible'),
-(3, 'P3A', 'NORMAL', 'Disponible'),
-(3, 'P3B', 'NORMAL', 'Disponible'),
-(3, 'P3C', 'NORMAL', 'Disponible'),
-(3, 'P3D', 'NORMAL', 'Disponible'),
-(3, 'P3E', 'NORMAL', 'Disponible'),
-(3, 'P3F', 'NORMAL', 'Disponible'),
-(3, 'P3G', 'NORMAL', 'Disponible'),
-(3, 'P3H', 'NORMAL', 'Disponible'),
-(3, 'P3I', 'NORMAL', 'Disponible'),
-(3, 'P3J', 'NORMAL', 'Disponible');
+INSERT INTO `estacionamiento` (`Piso`, `Cochera`, `Condicion`, `Estado`, `Cantidad`) VALUES
+(1, 'P1A', 'DISCAPACITADO', 'Disponible', 0),
+(1, 'P1B', 'DISCAPACITADO', 'Disponible', 0),
+(1, 'P1C', 'DISCAPACITADO', 'Disponible', 0),
+(1, 'P1D', 'NORMAL', 'Disponible', 0),
+(1, 'P1E', 'NORMAL', 'Disponible', 0),
+(1, 'P1F', 'NORMAL', 'Disponible', 0),
+(1, 'P1G', 'NORMAL', 'Ocupado', 1),
+(1, 'P1H', 'NORMAL', 'Disponible', 0),
+(1, 'P1I', 'NORMAL', 'Disponible', 0),
+(1, 'P1J', 'NORMAL', 'Disponible', 0),
+(2, 'P2A', 'NORMAL', 'Disponible', 0),
+(2, 'P2B', 'NORMAL', 'Disponible', 0),
+(2, 'P2C', 'NORMAL', 'Disponible', 0),
+(2, 'P2D', 'NORMAL', 'Disponible', 0),
+(2, 'P2E', 'NORMAL', 'Disponible', 0),
+(2, 'P2F', 'NORMAL', 'Disponible', 0),
+(2, 'P2G', 'NORMAL', 'Disponible', 0),
+(2, 'P2H', 'NORMAL', 'Disponible', 0),
+(2, 'P2I', 'NORMAL', 'Disponible', 0),
+(2, 'P2J', 'NORMAL', 'Disponible', 0),
+(3, 'P3A', 'NORMAL', 'Ocupado', 1),
+(3, 'P3B', 'NORMAL', 'Disponible', 0),
+(3, 'P3C', 'NORMAL', 'Disponible', 0),
+(3, 'P3D', 'NORMAL', 'Disponible', 0),
+(3, 'P3E', 'NORMAL', 'Disponible', 0),
+(3, 'P3F', 'NORMAL', 'Disponible', 0),
+(3, 'P3G', 'NORMAL', 'Disponible', 0),
+(3, 'P3H', 'NORMAL', 'Disponible', 0),
+(3, 'P3I', 'NORMAL', 'Disponible', 0),
+(3, 'P3J', 'NORMAL', 'Disponible', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `fechas`
+--
+
+CREATE TABLE `fechas` (
+  `id` int(11) NOT NULL,
+  `Dia` int(11) NOT NULL,
+  `Mes` int(11) NOT NULL,
+  `Anio` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -106,16 +138,18 @@ CREATE TABLE `personal` (
   `Nombre` varchar(50) NOT NULL,
   `Apellido` varchar(50) NOT NULL,
   `Contrasenia` varchar(30) NOT NULL,
-  `Edad` int(11) NOT NULL
+  `Edad` int(11) NOT NULL,
+  `Estado` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `personal`
 --
 
-INSERT INTO `personal` (`Legajo`, `Nombre`, `Apellido`, `Contrasenia`, `Edad`) VALUES
-(1, 'Rodrigo', 'Balabasquer', '29deseptiembre1774', 20),
-(3, 'leonardo', 'orlando', 'leonardoorlando', 22);
+INSERT INTO `personal` (`Legajo`, `Nombre`, `Apellido`, `Contrasenia`, `Edad`, `Estado`) VALUES
+(1, 'Rodrigo', 'Balabasquer', '29deseptiembre1774', 20, 'Activo'),
+(7, 'matias', 'binevies', 'matiasbinevies', 20, 'Activo'),
+(8, 'david', 'pinel', 'davidpinel', 21, 'Activo');
 
 -- --------------------------------------------------------
 
@@ -131,19 +165,39 @@ CREATE TABLE `vehiculos` (
   `Minuto` int(11) NOT NULL,
   `Dia` int(11) NOT NULL,
   `Mes` int(11) NOT NULL,
-  `Anio` int(11) NOT NULL
+  `Anio` int(11) NOT NULL,
+  `Operacion` varchar(30) NOT NULL,
+  `Pago` int(11) NOT NULL,
+  `Cochera` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `vehiculos`
 --
 
-INSERT INTO `vehiculos` (`Patente`, `Color`, `Marca`, `Hora`, `Minuto`, `Dia`, `Mes`, `Anio`) VALUES
-('APS547', 'Rojo', 'Fiat', 22, 33, 21, 5, 2017);
+INSERT INTO `vehiculos` (`Patente`, `Color`, `Marca`, `Hora`, `Minuto`, `Dia`, `Mes`, `Anio`, `Operacion`, `Pago`, `Cochera`) VALUES
+('AQC548', 'Rojo', 'FIAT', 0, 9, 26, 5, 2017, 'IngresoFin', 0, 'P2D'),
+('AQC548', 'Rojo', 'FIAT', 17, 25, 26, 5, 2017, 'Egreso', 140, 'P2D'),
+('QOD872', 'Verde', 'Chevrolet', 17, 50, 26, 5, 2017, 'IngresoFin', 0, 'P1G'),
+('XSN810', 'Violeta', 'FORT', 17, 51, 26, 5, 2017, 'Ingreso', 0, 'P3A'),
+('QOD872', 'Verde', 'Chevrolet', 18, 45, 26, 5, 2017, 'Egreso', 0, 'P1G'),
+('WTX045', 'Naranja', 'FIAT', 22, 1, 26, 5, 2017, 'Ingreso', 0, 'P1G');
 
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `empleados`
+--
+ALTER TABLE `empleados`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `fechas`
+--
+ALTER TABLE `fechas`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `personal`
@@ -156,10 +210,20 @@ ALTER TABLE `personal`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `empleados`
+--
+ALTER TABLE `empleados`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+--
+-- AUTO_INCREMENT de la tabla `fechas`
+--
+ALTER TABLE `fechas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT de la tabla `personal`
 --
 ALTER TABLE `personal`
-  MODIFY `Legajo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `Legajo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

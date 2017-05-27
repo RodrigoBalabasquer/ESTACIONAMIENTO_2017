@@ -5,7 +5,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Estacionamiento</title>
         <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+        
+        
         <script type="text/javascript">
             function Login()
             {   
@@ -32,6 +35,11 @@
                 {
                     alert("El usuario y/o contraseña son incorrectos");
                 }
+                if(resultado == "Suspendido")
+                {
+                    alert("Usted actualmente se encuentra suspendido");
+                }
+                
                 
             })
 			.fail(function (jqXHR, textStatus, errorThrown)
@@ -46,14 +54,16 @@
     </head>
     <body >
             
-            Ingresar:
+            <form id="FormIngreso">
+            <h1 class="list-group-item-heading">Ingresar:</h1>
             <br>
-            Nombre:<input type="text" id="nombre" required>
+            <h4 class="list-group-item-heading">Nombre:</h4><input type="text" id="nombre" name="usuario">
             <br>
-            Apellido:<input type="text" id="apellido"  required>
+            <h4 class="list-group-item-heading">Apellido:</h4><input type="text" id="apellido">
             <br>
-            Contraseña<input type="password" id="contraseña"  placeholder="Contraseña" required>
-            <br>         
+            <h4 class="list-group-item-heading">Contraseña:</h4><input type="password" id="contraseña"  placeholder="Contraseña">
+            <br>
             <input type="button" value="Aceptar" onclick="Login()">
+            </form>
     </body>
 </html>

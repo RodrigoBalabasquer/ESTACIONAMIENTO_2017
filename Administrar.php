@@ -26,13 +26,18 @@
                         <a href="ADMINISTRADOR/alta.php" class="list-group-item  list-group-item list-group-item-info">
                             <h4 class="list-group-item-heading">Contratar Empleado</h4>
                         </a>
-                        <!--<a href="baja.php" class="list-group-item  list-group-item list-group-item-info">
+                        <a href="ADMINISTRADOR/suspender.php" class="list-group-item  list-group-item list-group-item-info">
                             <h4 class="list-group-item-heading">Suspender Empleados</h4>
-                        </a>-->
+                        </a>
+                        <a href="ADMINISTRADOR/reabilitar.php" class="list-group-item  list-group-item list-group-item-info">
+                            <h4 class="list-group-item-heading">Reabilitar Empleados</h4>
+                        </a>
                         <a href="ADMINISTRADOR/despedir.php" class="list-group-item  list-group-item list-group-item-info">
                             <h4 class="list-group-item-heading">Despedir Empleados</h4>
                         </a>
-                        
+                        <a href="ADMINISTRADOR/Lista.php" class="list-group-item  list-group-item list-group-item-info">
+                            <h4 class="list-group-item-heading">Lista de Empleados</h4>
+                        </a>
                     </form>
                 </div>
             </div>
