@@ -38,6 +38,9 @@
                         <a href="ADMINISTRADOR/Lista.php" class="list-group-item  list-group-item list-group-item-info">
                             <h4 class="list-group-item-heading">Lista de Empleados</h4>
                         </a>
+                        <a href="ADMINISTRADOR/Monitorear.php" class="list-group-item  list-group-item list-group-item-info">
+                            <h4 class="list-group-item-heading">Monitorear Actividad</h4>
+                        </a>
                     </form>
                 </div>
             </div>

@@ -1,6 +1,5 @@
 <?php
     
-    $resultado = "NO OK";
     if($_POST['opcion'] == "Login")
     {
         $resultado = "No encontrado";

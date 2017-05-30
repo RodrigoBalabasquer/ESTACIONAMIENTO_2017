@@ -21,25 +21,11 @@ class Personal
     //Propiedades
     public function getNombre()
     {   
-        if($this->nombre =="")
-        {
-            return null;
-        }
-        else
-        {
-            return $this->nombre;
-        }
+        return $this->nombre;
     }
     public function getApellido()
     {
-        if($this->apellido =="")
-        {
-            return null;
-        }
-        else
-        {
-            return $this->apellido;
-        }
+        return $this->apellido;
     }
     public function getLegajo()
     {
@@ -47,25 +33,11 @@ class Personal
     }
     public function getContrasenia()
     {
-        if($this->contraseña =="")
-        {
-            return null;
-        }
-        else
-        {
-            return $this->contraseña;
-        }
+        return $this->contraseña;
     }
     public function getEdad()
     {
-        if($this->edad <18)
-        {
-            return null;
-        }
-        else
-        {
-            return $this->edad;
-        }
+        return $this->edad;
     }
 	public function getEstado()
     {

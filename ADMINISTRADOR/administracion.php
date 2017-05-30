@@ -1,6 +1,8 @@
 <?php
 require_once ("../CLASES/Personal.php");
 require_once ("../CLASES/Empleado.php");
+require_once ("../CLASES/Vehiculo.php");
+require_once ("../CLASES/Cochera.php");
 
 if($_POST["opcion"] == "Agregar")
 {
@@ -102,7 +104,45 @@ if($_POST["opcion"] == "Lista")
 		}
 	}
 }
-
+if($_POST["opcion"] == "Actividad") 
+{
+	$fecha = explode("-",$_POST["fecha"]);
+	$anio = (int)$fecha[0];
+	$dia = (int)$fecha[2];
+	$mes = (int)$fecha[1];
+	$vehiculos = Vehiculo::TraerAutosFiltrados($dia,$mes,$anio);
+	$valor1="Registro de autos:<br>";
+	foreach($vehiculos as $vehiculo)
+	{
+		if($vehiculo->getOperacion() != "Egreso")
+		{
+			$valor1.="A las ".$vehiculo->getHora().":".$vehiculo->getMinuto()." ingreso un auto con la patente ".$vehiculo->getPatente().".<br>"; 
+		}
+		else
+		{
+			$valor1.="A las ".$vehiculo->getHora().":".$vehiculo->getMinuto()." salio un auto con la patente ".$vehiculo->getPatente()." y pago ".$vehiculo->getPago()." pesos.<br>"; 
+		}
+	}
+	$id = ObtenerIdentificadorFechas($dia,$mes,$anio);
+	$cocheras = Cochera::TraerCocherasFiltrados($id);
+	$valor1.="<br>Promedio de Cocheras:<br>";
+	foreach($cocheras  as $cochera)
+	{
+		if($cochera->getCaracteristica() == "Mas utilizada")
+		{
+			$valor1.="Mas utilizada ".$cochera->getNumero()." con un cantidad de ".$cochera->getCantidad()."<br>"; 
+		}
+		if($cochera->getCaracteristica() == "Menos utilizada")
+		{
+			$valor1.="Menos utilizada ".$cochera->getNumero()." con un cantidad de ".$cochera->getCantidad()."<br>"; 
+		}
+		if($cochera->getCaracteristica() == "No utilizada")
+		{
+			$valor1.="No utilizada ".$cochera->getNumero()."<br>"; 
+		}
+	}
+	echo $valor1;
+}
 function TraerDatos($legajo)
 {
 	$Pdo = new PDO("mysql:host=localhost;dbname=tp-estacionamiento","root","");
@@ -116,5 +156,18 @@ function TraerDatos($legajo)
 		}
 		return $DatosEmpleado;
 }
-
+function ObtenerIdentificadorFechas($dia,$mes,$anio)
+{
+	$Pdo = new PDO("mysql:host=localhost;dbname=tp-estacionamiento","root","");
+	$PdoST = $Pdo->prepare("SELECT * FROM fechas WHERE Dia =:dia && Mes=:mes && Anio=:anio");
+	$PdoST->bindValue(":dia",$dia);
+	$PdoST->bindValue(":mes",$mes);
+	$PdoST->bindValue(":anio",$anio);
+	$PdoST->execute();
+	foreach($PdoST as $registro) //devuelve los valores de la base fila por fila
+	{	
+		$Dato[] = $registro["id"];
+	}
+	return $Dato[0];
+}
 ?>

@@ -109,9 +109,25 @@ class Vehiculo
     	$PdoST->execute();
 		foreach($PdoST as $registro) //devuelve los valores de la base fila por fila
 		{	
-			$ListaEmpleados[] = new Vehiculo($registro['Patente'],$registro['Color'],$registro['Marca'],$registro["Hora"],$registro["Minuto"],$registro["Dia"],$registro["Mes"],$registro["Anio"],$registro["Operacion"],$registro['Pago'],$registro['Cochera']);
+			$ListaVehiculos[] = new Vehiculo($registro['Patente'],$registro['Color'],$registro['Marca'],$registro["Hora"],$registro["Minuto"],$registro["Dia"],$registro["Mes"],$registro["Anio"],$registro["Operacion"],$registro['Pago'],$registro['Cochera']);
 		}
-		return $ListaEmpleados;
+		return $ListaVehiculos;
+	}
+    public static function TraerAutosFiltrados($dia,$mes,$anio)
+	{
+		$Pdo = new PDO("mysql:host=localhost;dbname=tp-estacionamiento","root","");
+        
+        $PdoST = $Pdo->prepare("SELECT * FROM vehiculos WHERE Dia =:dia && Mes=:mes && Anio=:anio");
+        $PdoST->bindValue(":dia",$dia);
+        $PdoST->bindValue(":mes",$mes);
+        $PdoST->bindValue(":anio",$anio);
+    	$PdoST->execute();
+        $ListaVehiculos = array();
+		foreach($PdoST as $registro) //devuelve los valores de la base fila por fila
+		{	
+			$ListaVehiculos[] = new Vehiculo($registro['Patente'],$registro['Color'],$registro['Marca'],$registro["Hora"],$registro["Minuto"],$registro["Dia"],$registro["Mes"],$registro["Anio"],$registro["Operacion"],$registro['Pago'],$registro['Cochera']);
+		}
+		return $ListaVehiculos;
 	}
 	public static function ObtenerIndice($array,$codigo)
 	{	
