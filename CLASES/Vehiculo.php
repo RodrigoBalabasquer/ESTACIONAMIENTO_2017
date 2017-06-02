@@ -74,7 +74,7 @@ class Vehiculo
     {
         return $this->Cochera;
     }
-
+    //Guarda un vehiculo en la base de datos
     public static function GuardarBaseDatos($obj)
 	{	
 		$Pdo = new PDO("mysql:host=localhost;dbname=tp-estacionamiento","root","");
@@ -92,6 +92,7 @@ class Vehiculo
         $PdoST->bindParam(":cochera",$obj->getCochera());
         $PdoST->execute();
 	}
+    //Registra que un vehiculo termino su ingreso y fue retirado del estacionamiento
     public static function ModificarBaseDatos($obj,$modificacion)
 	{	
 		$Pdo = new PDO("mysql:host=localhost;dbname=tp-estacionamiento","root","");
@@ -100,6 +101,7 @@ class Vehiculo
         $PdoST->bindParam(":cochera",$obj->getCochera());
         $PdoST->execute();
 	}
+    //Retorna un listado de todos los vehiculos que hayan ingresado y no fueran retirados
     public static function TraerTodosLosAutos()
 	{
 		$Pdo = new PDO("mysql:host=localhost;dbname=tp-estacionamiento","root","");
@@ -113,6 +115,7 @@ class Vehiculo
 		}
 		return $ListaVehiculos;
 	}
+    //Retorna un listado de todos los vehiculos que concuerden con la fecha
     public static function TraerAutosFiltrados($dia,$mes,$anio)
 	{
 		$Pdo = new PDO("mysql:host=localhost;dbname=tp-estacionamiento","root","");
@@ -129,6 +132,7 @@ class Vehiculo
 		}
 		return $ListaVehiculos;
 	}
+    //Obtendo el indice del vehiculo cuya patente concuerde con el codigo
 	public static function ObtenerIndice($array,$codigo)
 	{	
 		
@@ -143,6 +147,7 @@ class Vehiculo
 		}
 		return $numero;
 	}
+    //Retorna el valor que debe pagar al retirar el auto
     public static function ObtenerPago($auto)
     {
         $fecha1=mktime($auto->getHora(),$auto->getMinuto(),0,$auto->getMes(),$auto->getDia(),$auto->getAnio());

@@ -44,6 +44,7 @@ class Personal
         return $this->estado;
     }
 
+	//Guarda un empleado en la base de datos
     public static function GuardarBaseDatos($obj)
 	{	
 		$valor = true;
@@ -66,6 +67,7 @@ class Personal
 		}
 		return $valor;
 	}
+	//Borra un empleado en la base de datos
     public static function BorrarBaseDatos($obj)
 	{	
 		$valor = true;
@@ -83,6 +85,7 @@ class Personal
 		}
 		return $valor;
 	}
+	//Permite suspender o reabilitar a un empleado en la base de datos
 	public static function ModificarBaseDatos($obj,$modificacion)
 	{	
 		$valor = true;
@@ -101,6 +104,7 @@ class Personal
 		}
 		return $valor;
 	}
+	//Retorna un listado con todos el personal
     public static function TraerTodosLosEmpleados()
 	{
 		$Pdo = new PDO("mysql:host=localhost;dbname=tp-estacionamiento","root","");
@@ -114,6 +118,7 @@ class Personal
 		}
 		return $ListaEmpleados;
 	}
+	//Retorna el indice del personal que comparta el codigo
 	public static function ObtenerIndice($array,$codigo)
 	{	
 		

@@ -7,48 +7,6 @@
         <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
         <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
-        
-        <!--<script type="text/javascript">
-            function Login()
-            {   
-                var opcion = "Login";
-                $.ajax(
-			{
-				type: 'POST',
-				url: 'Loguear.php',
-				dataType: 'text',
-                data:"Nombre="+$("#nombre").val()+"&PASSWORD="+$("#contraseña").val()+"&Apellido="+$("#apellido").val()+"&opcion="+opcion,
-				async:true
-			})
-			.done(function(resultado)
-			{	
-				if(resultado == "Aministrador")
-                {
-                    window.location.href = "Administrar.php";
-                }
-                if(resultado == "Empleado")
-                {
-                    window.location.href = "LoguearTrabajador.php";
-                }
-                if(resultado == "No encontrado")
-                {
-                    alert("El usuario y/o contraseña son incorrectos");
-                }
-                if(resultado == "Suspendido")
-                {
-                    alert("Usted actualmente se encuentra suspendido");
-                }
-                
-                
-            })
-			.fail(function (jqXHR, textStatus, errorThrown)
-            {
-			    alert(jqXHR.responseText + "\n" + textStatus + "\n" + errorThrown);
-			});
-
-            }
-        
-        </script>-->
 
     </head>
     <body>
@@ -86,11 +44,11 @@
                 }
 
         //4.- INVOCAMOS AL METODO SOAP, PASANDOLE EL PARAMETRO DE ENTRADA
-                $result = "";
+                $result = array();
                 if(isset($_POST['btnLoguear']))
                 {
                     $result = $client->call('Loguear',array($_POST["nombre"],$_POST["apellido"],$_POST["contraseña"]));
-                }
+                
                 
 
         //5.- CHECKEAMOS POSIBLES ERRORES AL INVOCAR AL METODO DEL WS 
@@ -109,23 +67,35 @@
                     } 
                     else 
                     {//MOSTRAMOS EL RESULTADO DEL METODO DEL WS.
-                        if($result  == "Aministrador")
-                        {
+                        if($result['Mensaje']  == "Aministrador")
+                        {   
+                            session_start();
+                            $_SESSION["Nombre"] = $_POST["nombre"];
+                            $_SESSION["Apellido"] = $_POST["apellido"];
+                            $_SESSION["Contraseña"] = $_POST["contraseña"];
+                            $_SESSION["Legajo"] = $result['Legajo'];
                             echo '<script>window.location.href = "Administrar.php"</script>';
                         }
-                        if($result  == "Empleado")
+                        if($result['Mensaje']  == "Empleado")
                         {
+                            session_start();
+                            $_SESSION["Nombre"] = $_POST["nombre"];
+                            $_SESSION["Apellido"] = $_POST["apellido"];
+                            $_SESSION["Contraseña"] = $_POST["contraseña"];
+                            $_SESSION["Legajo"] = $result['Legajo'];
                             echo '<script>window.location.href = "LoguearTrabajador.php"</script>';
                         }
-                        if($result  == "No encontrado")
+                        if($result['Mensaje']  == "No encontrado")
                         {
                             echo '<pre> El usuario y/o contraseña son incorrectos </pre>';
                         }
-                        if($result  == "Suspendido")
+                        if($result['Mensaje']  == "Suspendido")
                         {   
                             echo '<pre> Usted actualmente se encuentra suspendido </pre>';
                         }
+                        
                     }
+                }
                 }
         ?>
     </body>

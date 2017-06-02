@@ -1,5 +1,6 @@
 <?php
     
+    //Busca que haya un personal que coincida con los datos ingresados y devuelve el valor correcto
     if($_POST['opcion'] == "Login")
     {
         $resultado = "No encontrado";

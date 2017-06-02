@@ -26,6 +26,8 @@ class Cochera
     {
         return $this->Cantidad;
     }
+
+    //Rertorna un listado de cocheras con los elementos que coincida con el id
     public static function TraerCocherasFiltrados($id)
 	{
 		$Pdo = new PDO("mysql:host=localhost;dbname=tp-estacionamiento","root","");

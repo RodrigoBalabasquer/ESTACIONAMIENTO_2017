@@ -3,6 +3,7 @@ require_once ("../CLASES/Estacionamiento.php");
 require_once ("../CLASES/Vehiculo.php");
 require_once ("../CLASES/Empleado.php");
 date_default_timezone_set ('America/Argentina/Buenos_Aires');
+//Muestra los lugares disponibles en la cochera
 if($_POST["opcion"] == "Lugares")
 {
     $Pdo = new PDO("mysql:host=localhost;dbname=tp-estacionamiento","root","");
@@ -20,8 +21,7 @@ if($_POST["opcion"] == "Lugares")
     echo    '<div class="CajaInicio animated bounceInRight">
 			<input type="text" id="Color" placeholder="Ingrese color"/>
 			<input type="text" id="Patente" placeholder="Ingrese patente"/>
-			<input type="text" id="Marca" placeholder="Ingrese marca"/>
-			</div>';
+			<input type="text" id="Marca" placeholder="Ingrese marca"/>';
     echo "<a href='#' class='list-group-item active'>Lugares disponibles</a>"; 	
     foreach ($ListaDeEstacionamientos as $cont)
     {
@@ -29,15 +29,20 @@ if($_POST["opcion"] == "Lugares")
         $numero = $cont->getNumero();
         if($cont->getCondicion() != "NORMAL")
         {
-            echo "<a onclick=aceptar('$numero') class='list-group-item list-group-item-danger'>Planta $piso Estacionamiento $numero Solo para discapacitados o Embarazadas</a>";
+            echo "<a onclick=aceptar('$numero') class='list-group-item list-group-item-danger'>
+            <h4 class='list-group-item-heading'>Planta $piso Estacionamiento $numero Solo para discapacitados o Embarazadas</h4>
+            </a>";
         }   
         else
         {
-            echo "<a onclick=aceptar('$numero') class='list-group-item list-group-item-info'>Planta $piso Estacionamiento $numero </a>";
+            echo "<a onclick=aceptar('$numero') class='list-group-item list-group-item-info'>
+            <h4 class='list-group-item-heading'>Planta $piso Estacionamiento $numero</h4>
+            </a>";
         }
-        
-    }	
+    }
+    echo "<div>";	
 }
+//Ocupa el lugar del estacionamiento seleccionado y registra el vehiculi con sus datos y la fecha de ingreso
 if($_POST["opcion"] == "Ocupar")
 {
     
@@ -55,6 +60,7 @@ if($_POST["opcion"] == "Ocupar")
     
 
 }
+//Retira un vehiculo de la base de datos y muestra sus datos junto el importe a pagar
 if($_POST["opcion"] == "Retirar")
 {
     $ArrayVehiculos = Vehiculo::TraerTodosLosAutos();
@@ -86,6 +92,7 @@ if($_POST["opcion"] == "Retirar")
         echo "Importe a pagar ".$vehiculo->getPago()."<br>";
     }
 }
+//Guarda la cantidad de operaciones que hizo el empleado y si es de turno noche guarda las cocheras mas, menos y no usadas
 if($_POST["opcion"] == "Log-out")
 {
     session_start();

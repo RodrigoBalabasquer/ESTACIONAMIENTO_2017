@@ -4,6 +4,7 @@ require_once ("../CLASES/Empleado.php");
 require_once ("../CLASES/Vehiculo.php");
 require_once ("../CLASES/Cochera.php");
 
+//Agrega un nuevo empleado a la tabla del personal
 if($_POST["opcion"] == "Agregar")
 {
 
@@ -19,6 +20,7 @@ if($_POST["opcion"] == "Agregar")
         echo "El empleado fue ingresado correctamente.";
 	}
 }
+//Elimina al empleado que coincida con el legajo ingresado 
 if($_POST["opcion"] == "Eliminar") 
 {
 	$ArrayEmpleados = Personal::TraerTodosLosEmpleados();
@@ -41,6 +43,7 @@ if($_POST["opcion"] == "Eliminar")
         }	
 	}
 }
+//Cambia el estado del empleado que coincida con el legajo ingresado a suspendido
 if($_POST["opcion"] == "Suspender") 
 {
 	$ArrayEmpleados = Personal::TraerTodosLosEmpleados();
@@ -63,6 +66,7 @@ if($_POST["opcion"] == "Suspender")
         }	
 	}
 }
+//Cambia el estado del empleado que coincida con el legajo ingresado a activo
 if($_POST["opcion"] == "Reabilitar") 
 {
 	$ArrayEmpleados = Personal::TraerTodosLosEmpleados();
@@ -77,7 +81,7 @@ if($_POST["opcion"] == "Reabilitar")
 	{	
 		if(!Personal::ModificarBaseDatos($ArrayEmpleados[$indice],"Activo"))
 		{   
-            echo "No se pudo suspender al empleado";
+            echo "No se pudo reabilitar al empleado";
         }
 		else
 		{   
@@ -85,6 +89,7 @@ if($_POST["opcion"] == "Reabilitar")
         }	
 	}
 }
+//Muestra un listado de los empleados, los dias que se loguearon y sus actividades
 if($_POST["opcion"] == "Lista") 
 {
 	$ArrayEmpleados = Personal::TraerTodosLosEmpleados();
@@ -104,6 +109,7 @@ if($_POST["opcion"] == "Lista")
 		}
 	}
 }
+//Muestra la informacion de toda la actividad realizada en la fecha ingresada
 if($_POST["opcion"] == "Actividad") 
 {
 	$fecha = explode("-",$_POST["fecha"]);
@@ -143,6 +149,7 @@ if($_POST["opcion"] == "Actividad")
 	}
 	echo $valor1;
 }
+//Retorna los datos del empleado que coincida con el legajo ingresado
 function TraerDatos($legajo)
 {
 	$Pdo = new PDO("mysql:host=localhost;dbname=tp-estacionamiento","root","");
@@ -156,6 +163,7 @@ function TraerDatos($legajo)
 		}
 		return $DatosEmpleado;
 }
+//Retorna el id de la fecha ingresada
 function ObtenerIdentificadorFechas($dia,$mes,$anio)
 {
 	$Pdo = new PDO("mysql:host=localhost;dbname=tp-estacionamiento","root","");

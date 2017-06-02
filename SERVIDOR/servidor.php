@@ -13,12 +13,25 @@
 	$server->configureWSDL('Mi Web Service', 'urn:testWS'); 
 	
 
+$server->wsdl->addComplexType(
+									'Retorno',
+									'complexType',
+									'struct',
+									'all',
+									'',
+									array('Mensaje' => array('name' => 'Mensaje', 'type' => 'xsd:string'),
+                                            'Legajo' => array('name' => 'Legajo', 'type' => 'xsd:int')
+										 )
+								);
+
+
 //4.- REGISTRAMOS EL METODO A EXPONER
 	$server->register('Loguear',                	// METODO
-				array('nombre' => 'xsd:string','apellido' => 'xsd:string',
+				array('nombre' => 'xsd:string',
+                'apellido' => 'xsd:string',
                 'contraseña' => 'xsd:string'),      // PARAMETROS DE ENTRADA
 				
-				array('return' => 'xsd:string'),    			// PARAMETROS DE SALIDA
+				array('return' => 'tns:Retorno'),    			// PARAMETROS DE SALIDA
 				'urn:testWS',                				// NAMESPACE
 				'urn:testWS#Loguear',           			// ACCION SOAP
 				'rpc',                        				// ESTILO
@@ -39,7 +52,6 @@
 		{	
 			$ListaDePersonal[] = new Personal($registro['Nombre'],$registro['Apellido'],$registro['Legajo'],$registro['Contrasenia'],$registro['Edad'],$registro['Estado']);
         }
-
         foreach ($ListaDePersonal as $per)
         {
             if($per->getNombre() == $nombre && $per->getApellido() == $apellido && $per->getContrasenia() == $contraseña)
@@ -60,16 +72,8 @@
                 }
             }
         }
-        if($resultado != "No encontrado" && $resultado != "Suspendido")
-        {
-            session_start();
-            $_SESSION["Nombre"] = $nombre;
-            $_SESSION["Apellido"] = $apellido;
-            $_SESSION["Contraseña"] = $contraseña;
-            $_SESSION["Legajo"] = $per->getLegajo();
-        }
-        return $resultado;
-	}
+        return array('Mensaje' => $resultado,'Legajo' => $per->getLegajo());
+    }
 //6.- USAMOS EL PEDIDO PARA INVOCAR EL SERVICIO
 	$HTTP_RAW_POST_DATA = file_get_contents("php://input");
 	

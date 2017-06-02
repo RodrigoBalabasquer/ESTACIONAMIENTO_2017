@@ -5,9 +5,11 @@
 	  
 		<meta charset="UTF-8">
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../Estilo.css">
 		<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
         <script type="text/javascript">
+            //Carga un listado de las cocheras disponibles
             window.onload = function()
             {
                 $.ajax(
@@ -27,6 +29,7 @@
                     alert(jqXHR.responseText + "\n" + textStatus + "\n" + errorThrown);
                 });
             }
+            //Ingresa un vehiculo
             function aceptar(numero)
             {   
                 $.ajax(

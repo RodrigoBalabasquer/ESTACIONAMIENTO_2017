@@ -42,7 +42,7 @@ class Estacionamiento
         return $this->Cantidad;
         
     }
-
+	//Modifica el estado de las cocheras del estacionamiento, valores que puede cambiar activo/suspendido
     public static function ModificarBaseDatos($obj,$modificacion)
 	{	
 		$Pdo = new PDO("mysql:host=localhost;dbname=tp-estacionamiento","root","");
@@ -51,6 +51,7 @@ class Estacionamiento
 		$PdoST->bindParam(":numero",$obj->getNumero());
 		$PdoST->execute();
 	}
+	//Incrementa la cantidad de veces que fue usada una cochera
 	public static function IncrementarBaseDatos($obj)
 	{
 		$Pdo = new PDO("mysql:host=localhost;dbname=tp-estacionamiento","root","");
@@ -58,6 +59,7 @@ class Estacionamiento
 		$PdoST->bindParam(":numero",$obj->getNumero());
 		$PdoST->execute();
 	}
+	//Retorna un listado con todas las cocheras del estacionamiento
     public static function TraerTodasLasCocheras()
 	{
 		$Pdo = new PDO("mysql:host=localhost;dbname=tp-estacionamiento","root","");
@@ -71,6 +73,7 @@ class Estacionamiento
 		}
 		return $ListaCocheras;
 	}
+	//Retorna un listado con todas las cocheras mas usadas del estacionamiento
 	public static function TraerLasCocherasMayor($mayor)
 	{
 		$Pdo = new PDO("mysql:host=localhost;dbname=tp-estacionamiento","root","");
@@ -84,6 +87,7 @@ class Estacionamiento
 		}
 		return $ListaCocheras;
 	}
+	//Retorna un listado con todas las cocheras menos usadas del estacionamiento
 	public static function TraerLasCocherasMenor($menor)
 	{
 		$Pdo = new PDO("mysql:host=localhost;dbname=tp-estacionamiento","root","");
@@ -97,6 +101,7 @@ class Estacionamiento
 		}
 		return $ListaCocheras;
 	}
+	//Retorna un listado con todas las cocheras no usadas del estacionamiento
 	public static function TraerLasCocherasCero()
 	{
 		$Pdo = new PDO("mysql:host=localhost;dbname=tp-estacionamiento","root","");
@@ -109,6 +114,7 @@ class Estacionamiento
 		}
 		return $ListaCocheras;
 	}
+	//Devuelve true si alguna cochera no fue usada
 	public static function ObtenerCantidadCero($array)
 	{	
 		$valor = false;
@@ -122,6 +128,7 @@ class Estacionamiento
 		}
 		return $valor;
 	}
+	//Devuelve el mayor numero de uso que hubo en las cocheras
 	public static function ObtenerMayorCantidad($array)
 	{
 		$mayor = 0;
@@ -134,6 +141,7 @@ class Estacionamiento
 		}
 		return $mayor;
 	}
+	//Devuelve el menor numero de uso que hubo en las cocheras
 	public static function ObtenerMenorCantidad($array)
 	{
 		$menor = 10000;
@@ -146,6 +154,7 @@ class Estacionamiento
 		}
 		return $menor;
 	}
+	//Devuelve el indice que corresponde a la cochera con comparta el mismo codigo
 	public static function ObtenerIndice($array,$codigo)
 	{	
 		
@@ -160,6 +169,7 @@ class Estacionamiento
 		}
 		return $numero;
 	}
+	//Al finalizar el dia resetea las cantidades de uso del estacionamiento
 	public static function Reset($array)
 	{
 		$Pdo = new PDO("mysql:host=localhost;dbname=tp-estacionamiento","root","");
