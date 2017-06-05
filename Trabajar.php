@@ -16,7 +16,7 @@
                 $.ajax(
                 {
                     type: 'POST',
-                    url: 'TRABAJADOR/administracion.php',
+                    url: 'ACTIVIDAD/administracion.php',
                     dataType: 'text',
                     data: "opcion="+"Log-out",
                     async:true
@@ -41,10 +41,10 @@
                 </div>
                 <div class="CajaInicio animated bounceInRight">
                     <form id="FormIngreso">
-                        <a href="TRABAJADOR/ingresar.php" class="list-group-item  list-group-item list-group-item-info">
+                        <a href="ACTIVIDAD/ingresar.php" class="list-group-item  list-group-item list-group-item-info">
                             <h4 class="list-group-item-heading">Ingresar Vehiculo</h4>
                         </a>
-                        <a href="TRABAJADOR/egresar.php" class="list-group-item  list-group-item list-group-item-info">
+                        <a href="ACTIVIDAD/egresar.php" class="list-group-item  list-group-item list-group-item-info">
                             <h4 class="list-group-item-heading">Retirar Vehiculo</h4>
                         </a>
                         <br>

@@ -74,6 +74,13 @@
                             $_SESSION["Apellido"] = $_POST["apellido"];
                             $_SESSION["Contraseña"] = $_POST["contraseña"];
                             $_SESSION["Legajo"] = $result['Legajo'];
+                            $_SESSION["Turno"] = $result['Turno'];
+                            $_SESSION["Nivel"] =$result['Nivel'];
+                            $_SESSION["Dia"] = $result["Dia"];
+                            $_SESSION["Mes"] = $result["Mes"];
+                            $_SESSION["Anio"] = $result["Anio"];
+                            $_SESSION["Cantidad"] = $result['Cantidad'];
+                            $_SESSION["Id"] = $result['ID'];
                             echo '<script>window.location.href = "Administrar.php"</script>';
                         }
                         if($result['Mensaje']  == "Empleado")
@@ -83,7 +90,14 @@
                             $_SESSION["Apellido"] = $_POST["apellido"];
                             $_SESSION["Contraseña"] = $_POST["contraseña"];
                             $_SESSION["Legajo"] = $result['Legajo'];
-                            echo '<script>window.location.href = "LoguearTrabajador.php"</script>';
+                            $_SESSION["Turno"] = $result['Turno'];
+                            $_SESSION["Nivel"] =$result['Nivel'];
+                            $_SESSION["Dia"] = $result["Dia"];
+                            $_SESSION["Mes"] = $result["Mes"];
+                            $_SESSION["Anio"] = $result["Anio"];
+                            $_SESSION["Cantidad"] = $result['Cantidad'];
+                            $_SESSION["Id"] = $result['ID'];
+                            echo '<script>window.location.href = "Trabajar.php"</script>';
                         }
                         if($result['Mensaje']  == "No encontrado")
                         {

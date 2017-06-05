@@ -9,8 +9,9 @@ class Empleado
 	private $mes;
     private $anio;
     private $cantidad;
+    private $nivel;
 
-    public function __construct($nombre,$apellido,$legajo,$turno,$dia,$mes,$anio,$cantidad)
+    public function __construct($nombre,$apellido,$legajo,$turno,$dia,$mes,$anio,$cantidad,$nivel)
 	{
 		$this->nombre = $nombre;
 		$this->apellido = $apellido;
@@ -20,6 +21,7 @@ class Empleado
 		$this->mes = $mes;
         $this->anio = $anio;
         $this->cantidad = $cantidad;
+        $this->nivel = $nivel;
 	}
 
     //Propiedades
@@ -56,7 +58,10 @@ class Empleado
     {
         return $this->cantidad;
     }
-
+    public function getNivel()
+    {
+        return $this->nivel;
+    }
     
 
 }

@@ -4,18 +4,22 @@ class Personal
     private $nombre;
  	private $apellido;
     private $legajo;
+	private $dni;
   	private $contraseña;
     private $edad;
 	private $estado;
+	private $nivel;
 
-    public function __construct($nombre,$apellido,$legajo=null,$contraseña,$edad,$estado)
+    public function __construct($nombre,$apellido,$dni,$legajo=null,$contraseña,$edad,$estado,$nivel)
 	{
 		$this->nombre = $nombre;
 		$this->apellido = $apellido;
+		$this->dni = $dni;
 		$this->legajo = $legajo;
 		$this->contraseña = $contraseña;
         $this->edad = $edad;
 		$this->estado = $estado;
+		$this->nivel = $nivel;
 	}
 
     //Propiedades
@@ -26,6 +30,10 @@ class Personal
     public function getApellido()
     {
         return $this->apellido;
+    }
+	public function getDni()
+    {
+        return $this->dni;
     }
     public function getLegajo()
     {
@@ -43,6 +51,10 @@ class Personal
     {
         return $this->estado;
     }
+	public function getNivel()
+    {
+        return $this->nivel;
+    }
 
 	//Guarda un empleado en la base de datos
     public static function GuardarBaseDatos($obj)
@@ -51,12 +63,14 @@ class Personal
 		try
 		{
 			$Pdo = new PDO("mysql:host=localhost;dbname=tp-estacionamiento","root","");
-			$PdoST = $Pdo->prepare("INSERT INTO personal(Legajo,Nombre,Apellido,Contrasenia,Edad,Estado) VALUES(null,:nombre,:apellido,:contrasenia,:edad,:estado)");
+			$PdoST = $Pdo->prepare("INSERT INTO personal(Legajo,Nombre,Apellido,DNI,Contrasenia,Edad,Estado,Nivel) VALUES(null,:nombre,:apellido,:dni,:contrasenia,:edad,:estado,:nivel)");
 			$PdoST->bindParam(":nombre",$obj->getNombre());
 			$PdoST->bindParam(":apellido",$obj->getApellido()); 
+			$PdoST->bindParam(":dni",$obj->getDni()); 
 			$PdoST->bindParam(":contrasenia",$obj->getContrasenia());
             $PdoST->bindParam(":edad",$obj->getEdad());
 			$PdoST->bindParam(":estado",$obj->getEstado());
+			$PdoST->bindParam(":nivel",$obj->getNivel());
 			$PdoST->execute();
 			
 		}
@@ -114,7 +128,20 @@ class Personal
     	$PdoST->execute();
 		foreach($PdoST as $registro) //devuelve los valores de la base fila por fila
 		{	
-			$ListaEmpleados[] = new Personal($registro['Nombre'],$registro['Apellido'],$registro['Legajo'],$registro['Contrasenia'],$registro['Edad'],$registro['Estado']);
+			$ListaEmpleados[] = new Personal($registro['Nombre'],$registro['Apellido'],$registro['DNI'],$registro['Legajo'],$registro['Contrasenia'],$registro['Edad'],$registro['Estado'],$registro['Nivel']);
+		}
+		return $ListaEmpleados;
+	}
+	public static function TraerEmpleadosFiltrados($valor)
+	{
+		$Pdo = new PDO("mysql:host=localhost;dbname=tp-estacionamiento","root","");
+
+		$PdoST = $Pdo->prepare("SELECT * FROM personal WHERE Estado = :valor && Nivel = 0");
+		$PdoST->bindParam(":valor",$valor);
+    	$PdoST->execute();
+		foreach($PdoST as $registro) //devuelve los valores de la base fila por fila
+		{	
+			$ListaEmpleados[] = new Personal($registro['Nombre'],$registro['Apellido'],$registro['DNI'],$registro['Legajo'],$registro['Contrasenia'],$registro['Edad'],$registro['Estado'],$registro['Nivel']);
 		}
 		return $ListaEmpleados;
 	}

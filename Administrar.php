@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html>
     <head>
@@ -10,6 +11,27 @@
         <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
         <script type="text/javascript">
+            //Desconecta al trabajador
+            function Borrar()
+            {   
+                $.ajax(
+                {
+                    type: 'POST',
+                    url: 'ACTIVIDAD/administracion.php',
+                    dataType: 'text',
+                    data: "opcion="+"Log-out",
+                    async:true
+                })
+                .done(function(resultado)
+                {	
+                    //$("#div").html(resultado);
+                    window.location.href ="index.html";
+                })
+                .fail(function (jqXHR, textStatus, errorThrown)
+                {
+                    alert(jqXHR.responseText + "\n" + textStatus + "\n" + errorThrown);
+                });
+            }
         </script>
 
     </head>
@@ -20,24 +42,32 @@
                 </div>
                 <div class="CajaInicio animated bounceInRight">
                     <form id="FormIngreso">
-                        <a href="ADMINISTRADOR/alta.php" class="list-group-item  list-group-item list-group-item-info">
+                        <a href="ACTIVIDAD/alta.php" class="list-group-item  list-group-item list-group-item-info">
                             <h4 class="list-group-item-heading">Contratar Empleado</h4>
                         </a>
-                        <a href="ADMINISTRADOR/suspender.php" class="list-group-item  list-group-item list-group-item-info">
+                        <a href="ACTIVIDAD/suspender.php" class="list-group-item  list-group-item list-group-item-info">
                             <h4 class="list-group-item-heading">Suspender Empleados</h4>
                         </a>
-                        <a href="ADMINISTRADOR/reabilitar.php" class="list-group-item  list-group-item list-group-item-info">
+                        <a href="ACTIVIDAD/reabilitar.php" class="list-group-item  list-group-item list-group-item-info">
                             <h4 class="list-group-item-heading">Reabilitar Empleados</h4>
                         </a>
-                        <a href="ADMINISTRADOR/despedir.php" class="list-group-item  list-group-item list-group-item-info">
+                        <a href="ACTIVIDAD/despedir.php" class="list-group-item  list-group-item list-group-item-info">
                             <h4 class="list-group-item-heading">Despedir Empleados</h4>
                         </a>
-                        <a href="ADMINISTRADOR/Lista.php" class="list-group-item  list-group-item list-group-item-info">
+                        <a href="ACTIVIDAD/Lista.php" class="list-group-item  list-group-item list-group-item-info">
                             <h4 class="list-group-item-heading">Lista de Empleados</h4>
                         </a>
-                        <a href="ADMINISTRADOR/Monitorear.php" class="list-group-item  list-group-item list-group-item-info">
+                        <a href="ACTIVIDAD/Monitorear.php" class="list-group-item  list-group-item list-group-item-info">
                             <h4 class="list-group-item-heading">Monitorear Actividad</h4>
                         </a>
+                        <a href="ACTIVIDAD/ingresar.php" class="list-group-item  list-group-item list-group-item-info">
+                            <h4 class="list-group-item-heading">Ingresar Vehiculo</h4>
+                        </a>
+                        <a href="ACTIVIDAD/egresar.php" class="list-group-item  list-group-item list-group-item-info">
+                            <h4 class="list-group-item-heading">Retirar Vehiculo</h4>
+                        </a>
+                        <br>
+                        <input type="button" class="MiBotonUTN" value="Desconectar" onclick="Borrar()">
                     </form>
                 </div>
             </div>
