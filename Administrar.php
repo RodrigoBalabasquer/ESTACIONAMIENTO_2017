@@ -6,8 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Administrador</title>
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="./Estilo.css">
-
+        
         <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
         <script type="text/javascript">
@@ -35,7 +34,7 @@
         </script>
 
     </head>
-    <body>
+    <body>  
             <div class="container">
                 <div class="page-header">
                     <h1>Administrador</h1>      
@@ -55,7 +54,7 @@
                             <h4 class="list-group-item-heading">Despedir Empleados</h4>
                         </a>
                         <a href="ACTIVIDAD/Lista.php" class="list-group-item  list-group-item list-group-item-info">
-                            <h4 class="list-group-item-heading">Lista de Empleados</h4>
+                            <h4 class="list-group-item-heading">Datos de Empleados</h4>
                         </a>
                         <a href="ACTIVIDAD/Monitorear.php" class="list-group-item  list-group-item list-group-item-info">
                             <h4 class="list-group-item-heading">Monitorear Actividad</h4>

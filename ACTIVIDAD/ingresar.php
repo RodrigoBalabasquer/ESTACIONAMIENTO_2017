@@ -4,53 +4,83 @@
 	<title>Ingreso de Vehiculos</title>
 	  
 		<meta charset="UTF-8">
-        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="../Estilo.css">
-		<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
+        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+        
         <script type="text/javascript">
             //Carga un listado de las cocheras disponibles
             window.onload = function()
             {
                 $.ajax(
-                {
-                    type: 'POST',
-                    url: 'administracion.php',
-                    dataType: 'text',
-                    data: "opcion="+"Lugares",
-                    async:true
-                })
-                .done(function(resultado)
-                {	
-                    $('#lista').html(resultado);
-                })
-                .fail(function (jqXHR, textStatus, errorThrown)
-                {
-                    alert(jqXHR.responseText + "\n" + textStatus + "\n" + errorThrown);
-                });
+                    {
+                        type: 'POST',
+                        url: '../API-REST/ApiRest.php/Lista',
+                        dataType: 'text',
+                        data: "valor="+$("#select").val(),
+                        async:true
+                    })
+                    .done(function(resultado)
+                    {	
+                        $('#lista').html(resultado);
+                    })
+                    .fail(function (jqXHR, textStatus, errorThrown)
+                    {
+                        alert(jqXHR.responseText + "\n" + textStatus + "\n" + errorThrown);
+                    });
             }
+            function Lista()
+                {
+                    $.ajax(
+                    {
+                        type: 'POST',
+                        url: '../API-REST/ApiRest.php/Lista',
+                        dataType: 'text',
+                        data: "opcion="+"Lugares"+"&valor="+$("#select").val(),
+                        async:true
+                    })
+                    .done(function(resultado)
+                    {	
+                        $('#lista').html(resultado);
+                    })
+                    .fail(function (jqXHR, textStatus, errorThrown)
+                    {
+                        alert(jqXHR.responseText + "\n" + textStatus + "\n" + errorThrown);
+                    });
+                }
             //Ingresa un vehiculo
             function aceptar(numero)
             {   
-                $.ajax(
-                {
-                    type: 'POST',
-                    url: 'administracion.php',
-                    dataType: 'text',
-                    data: "opcion="+"Ocupar"+"&numero="+numero+"&color="+$("#Color").val()+"&patente="+$("#Patente").val()+"&marca="+$("#Marca").val(),
-                    async:true
-                })
-                .done(function(resultado)
-                {	
-                    //window.location.href ="ingresar.php";
-                    $("#lista").html(resultado);
-                })
-                .fail(function (jqXHR, textStatus, errorThrown)
-                {
-                    alert(jqXHR.responseText + "\n" + textStatus + "\n" + errorThrown);
-                });
+                $("#text").val(numero);
             }
-        
+            
+            function Ocupar()
+			{
+				var formulario = document.getElementById('formulario');
+				if(formulario.checkValidity())
+                {
+                    $.ajax(
+                    {
+                        type: 'POST',
+                        url: '../API-REST/ApiRest.php/Ocupar',
+                        dataType: 'text',
+                        data: "numero="+$("#text").val()+"&color="+$("#Color").val()+"&patente="+$("#Patente").val()+"&marca="+$("#Marca").val(),
+                        async:true
+                    })
+                    .done(function(resultado)
+                    {	
+                        window.location.href = "ingresar.php"
+                        
+                    })
+                    .fail(function (jqXHR, textStatus, errorThrown)
+                    {
+                        alert(jqXHR.responseText + "\n" + textStatus + "\n" + errorThrown);
+                    });
+                    
+                }
+			}
 
         </script>
  </head>
@@ -66,10 +96,30 @@
         echo '<a class="btn btn-info" href="../Trabajar.php">Menu principal</a>';
     }
     ?>
+    
     <div  class="container" style="padding-top: 1em;">
-            <div id="lista" class="list-group">
+            
+            <select class="selectpicker" id="select" onchange="Lista()">
+            <option value="1">Primer Piso</option>
+            <option value="2">Segundo Piso</option>
+            <option value="3">Tercer Piso</option>
+            </select>
+            <br>
+            <br>
+            <form id="formulario" action="" method="post" onsubmit="return false;">
+                <input type="text" class="form-control" id="Color" placeholder="Ingrese color" required/>
+                <br>
+                <input type="text" class="form-control" id="Patente" placeholder="Ingrese patente" required/>
+                <br>
+                <input type="text" class="form-control" id="Marca" placeholder="Ingrese marca" required/>
+                <br>
+                <div id="lista" class="list-group">
                 
-            </div>
+                </div>
+                Valor Seleccionado<input type="text" id="text" required/>
+                <br>
+                <input type="submit" onclick="Ocupar()" class="btn btn-primary" value="Ocupar cochera seleccionada" id="submit"/>
+            </form>
     </div>
 	
 </body>

@@ -146,12 +146,12 @@ class Personal
 		return $ListaEmpleados;
 	}
 	//Retorna el indice del personal que comparta el codigo
-	public static function ObtenerIndice($array,$codigo)
+	public static function ObtenerIndice($array,$codigo1,$codigo2)
 	{	
 		
 		foreach($array as $valor)
 		{
-			if($valor->getLegajo() == $codigo)
+			if($valor->getNombre() == $codigo1 && $valor->getDni() == $codigo2)
 			{
 				$numero = array_search($valor,$array);
 				break;

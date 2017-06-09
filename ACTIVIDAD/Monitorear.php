@@ -9,42 +9,79 @@
         <script type="text/javascript">
 			//Muestra la informacion de las actividades realizadas el dia de la fecha
             function Mostrar()
-            {
-                var opcion = "Actividad";
-				$.ajax(
+            {	
+				var formulario = document.getElementById('formulario');
+				if(formulario.checkValidity())
+                {
+					$.ajax(
+					{
+						type: 'POST',
+						url: '../API-REST/ApiRest.php/Monitorear',
+						dataType: 'text',
+						data:"fecha="+$("#fecha").val(),
+						async:true
+					})
+					.done(function(resultado)
+					{	
+						$("#div").html(resultado);
+						
+					})
+					.fail(function (jqXHR, textStatus, errorThrown)
+					{
+						$("#div").html(jqXHR.responseText + "\n" + textStatus + "\n" + errorThrown);
+					});
+				}
+			}
+			window.onload= function()
 			{
-				type: 'POST',
-				url: 'administracion.php',
-				dataType: 'text',
-                data:"opcion="+opcion+"&fecha="+$("#fecha").val(),
-				async:true
-			})
-			.done(function(resultado)
-			{	
-				$("#div").html(resultado);
-                
-            })
-			.fail(function (jqXHR, textStatus, errorThrown)
-            {
-			    alert(jqXHR.responseText + "\n" + textStatus + "\n" + errorThrown);
-			});
-            }
+				var fecha = document.getElementById("fecha");
+				var d = new Date();
+				if(d.getMonth() >=9)
+				{
+					var mes = d.getMonth()+1;
+				}
+				else
+				{
+					var mes = String(d.getMonth()+1);
+					 mes = "0"+mes;
+				}
+				if(d.getDate() >=10)
+				{
+					var dia = d.getDate();
+				}
+				else
+				{
+					var dia = String(d.getDate());
+					dia = "0"+dia;
+				}
+				fecha.max = d.getFullYear()+"-"+mes+"-"+dia;
+			}
         </script>
  </head>
 <body>
-	<a class="btn btn-info" href="../Administrar.php">Menu principal</a>
+	<?php
+    session_start();
+    if($_SESSION != null)
+    {
+        
+    	echo '<a class="btn btn-info" href="../Trabajar.php">Menu principal</a>';
+    ?>
+    
 	<div class="container">
-	
+	 <form id="formulario" action="" method="post" onsubmit="return false;">
 		<div class="page-header">
 			<h1>Ingrese Fecha</h1>
-            <input type="date" class="form-control" id="fecha">  
+            <input type="date" class="form-control" min="2017-05-28"  id="fecha"  required>  
             <br>
-            <input type="button" value="Aceptar" class="btn btn-primary btn-lg" onclick="Mostrar()">    
+            <input type="submit" value="Aceptar" class="btn btn-primary btn-lg" onclick="Mostrar()">    
 		</div>
-		
 		<div id="div">
 
 		</div>
 	</div>
+	</form>
+	<?php
+    }
+    ?>
 </body>
 </html>

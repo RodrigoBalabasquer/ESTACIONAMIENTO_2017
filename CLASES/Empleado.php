@@ -62,8 +62,40 @@ class Empleado
     {
         return $this->nivel;
     }
-    
+    function ObtenerDatosEmpleado($legajo)
+    {
+            $Pdo = new PDO("mysql:host=localhost;dbname=tp-estacionamiento","root","");
 
+            $PdoST = $Pdo->prepare("SELECT * FROM empleados WHERE Legajo = :legajo");
+            $PdoST->bindParam(":legajo",$legajo);
+            $PdoST->execute();
+            foreach($PdoST as $registro) //devuelve los valores de la base fila por fila
+            {	
+                $DatosEmpleado[] = new Empleado($registro['Nombre'],$registro['Apellido'],$registro['Legajo'],$registro['Turno'],$registro['Dia'],$registro['Mes'],$registro['Anio'],$registro['CantidadOperaciones'],$registro['Nivel']);
+            }
+            return $DatosEmpleado;
+    }
+    function VerificarOperaciones($legajo)
+    {
+            $Pdo = new PDO("mysql:host=localhost;dbname=tp-estacionamiento","root","");
+
+            $PdoST = $Pdo->prepare("SELECT * FROM empleados WHERE 1");
+            $PdoST->execute();
+            foreach($PdoST as $registro) //devuelve los valores de la base fila por fila
+            {	
+                $DatosEmpleado[] = new Empleado($registro['Nombre'],$registro['Apellido'],$registro['Legajo'],$registro['Turno'],$registro['Dia'],$registro['Mes'],$registro['Anio'],$registro['CantidadOperaciones'],$registro['Nivel']);
+            }
+            $retorno = false;
+            foreach($DatosEmpleado as $valor)
+            {
+                if($valor->getLegajo() == $legajo)
+                {
+                    $retorno = true;
+                    break;
+                }
+            }
+            return $retorno;
+    }
 }
 
 ?>

@@ -154,7 +154,8 @@ function ObtenerIdentificadorFechas($dia,$mes,$anio)
 if($_POST["opcion"] == "Lugares")
 {
     $Pdo = new PDO("mysql:host=localhost;dbname=tp-estacionamiento","root","");
-    $PdoST = $Pdo->prepare("SELECT * FROM estacionamiento WHERE Estado = 'Disponible'");
+    $PdoST = $Pdo->prepare("SELECT * FROM estacionamiento WHERE Estado = 'Disponible' && Piso = :piso");
+    $PdoST->bindValue(":piso",$_POST['valor']);
     $PdoST->execute();
     $ListaDeEstacionamientos = array();
     foreach($PdoST as $registro) //devuelve los valores de la base fila por fila
