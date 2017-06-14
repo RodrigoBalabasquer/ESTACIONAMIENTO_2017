@@ -3,6 +3,7 @@ class Personal
 {
     private $nombre;
  	private $apellido;
+	private $usuario;
     private $legajo;
 	private $dni;
   	private $contraseña;
@@ -10,8 +11,9 @@ class Personal
 	private $estado;
 	private $nivel;
 
-    public function __construct($nombre,$apellido,$dni,$legajo=null,$contraseña,$edad,$estado,$nivel)
-	{
+    public function __construct($usuario,$nombre,$apellido,$dni,$legajo=null,$contraseña,$edad,$estado,$nivel)
+	{	
+		$this->usuario = $usuario;
 		$this->nombre = $nombre;
 		$this->apellido = $apellido;
 		$this->dni = $dni;
@@ -23,6 +25,10 @@ class Personal
 	}
 
     //Propiedades
+	public function getUsuario()
+    {   
+        return $this->usuario;
+    }
     public function getNombre()
     {   
         return $this->nombre;
@@ -63,7 +69,8 @@ class Personal
 		try
 		{
 			$Pdo = new PDO("mysql:host=localhost;dbname=tp-estacionamiento","root","");
-			$PdoST = $Pdo->prepare("INSERT INTO personal(Legajo,Nombre,Apellido,DNI,Contrasenia,Edad,Estado,Nivel) VALUES(null,:nombre,:apellido,:dni,:contrasenia,:edad,:estado,:nivel)");
+			$PdoST = $Pdo->prepare("INSERT INTO personal(Legajo,Usuario,Nombre,Apellido,DNI,Contrasenia,Edad,Estado,Nivel) VALUES(null,:usuario,:nombre,:apellido,:dni,:contrasenia,:edad,:estado,:nivel)");
+			$PdoST->bindParam(":usuario",$obj->getUsuario());
 			$PdoST->bindParam(":nombre",$obj->getNombre());
 			$PdoST->bindParam(":apellido",$obj->getApellido()); 
 			$PdoST->bindParam(":dni",$obj->getDni()); 
@@ -128,9 +135,23 @@ class Personal
     	$PdoST->execute();
 		foreach($PdoST as $registro) //devuelve los valores de la base fila por fila
 		{	
-			$ListaEmpleados[] = new Personal($registro['Nombre'],$registro['Apellido'],$registro['DNI'],$registro['Legajo'],$registro['Contrasenia'],$registro['Edad'],$registro['Estado'],$registro['Nivel']);
+			$ListaEmpleados[] = new Personal($registro['Usuario'],$registro['Nombre'],$registro['Apellido'],$registro['DNI'],$registro['Legajo'],$registro['Contrasenia'],$registro['Edad'],$registro['Estado'],$registro['Nivel']);
 		}
 		return $ListaEmpleados;
+	}
+	public static function Validar($dni)
+	{	
+		$valor=true;
+		$empleados = Personal::TraerTodosLosEmpleados();
+		foreach($empleados as $empleado)
+		{
+			if($empleado->getDni()==$dni)
+			{
+				$valor=false;
+				break;
+			}
+		}
+		return $valor;
 	}
 	public static function TraerEmpleadosFiltrados($valor)
 	{
@@ -141,17 +162,17 @@ class Personal
     	$PdoST->execute();
 		foreach($PdoST as $registro) //devuelve los valores de la base fila por fila
 		{	
-			$ListaEmpleados[] = new Personal($registro['Nombre'],$registro['Apellido'],$registro['DNI'],$registro['Legajo'],$registro['Contrasenia'],$registro['Edad'],$registro['Estado'],$registro['Nivel']);
+			$ListaEmpleados[] = new Personal($registro['Ususario'],$registro['Nombre'],$registro['Apellido'],$registro['DNI'],$registro['Legajo'],$registro['Contrasenia'],$registro['Edad'],$registro['Estado'],$registro['Nivel']);
 		}
 		return $ListaEmpleados;
 	}
 	//Retorna el indice del personal que comparta el codigo
-	public static function ObtenerIndice($array,$codigo1,$codigo2)
+	public static function ObtenerIndice($array,$codigo1)
 	{	
 		
 		foreach($array as $valor)
 		{
-			if($valor->getNombre() == $codigo1 && $valor->getDni() == $codigo2)
+			if($valor->getLegajo() == $codigo1)
 			{
 				$numero = array_search($valor,$array);
 				break;

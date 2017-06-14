@@ -5,43 +5,35 @@ class Estacionamiento
  	private $Numero;
     private $Condicion;
   	private $Estado;
-	private $Cantidad;
+	
     
 
-    public function __construct($piso,$numero,$condicion,$estado,$cantidad)
+    public function __construct($piso,$numero,$condicion,$estado)
 	{
 		$this->Piso = $piso;
 		$this->Numero = $numero;
 		$this->Condicion = $condicion;
 		$this->Estado = $estado;
-		$this->Cantidad = $cantidad;
-    }
+	}
 
     //Propiedades
     public function getPiso()
     {   
         return $this->Piso;
-        
     }
     public function getNumero()
     {
         return $this->Numero;
-        
     }
     public function getCondicion()
     {
-        return $this->Condicion;
+		return $this->Condicion;
     }
     public function getEstado()
     {
         return $this->Estado;
-        
     }
-	public function getCantidad()
-    {
-        return $this->Cantidad;
-        
-    }
+	
 	//Modifica el estado de las cocheras del estacionamiento, valores que puede cambiar activo/suspendido
     public static function ModificarBaseDatos($obj,$modificacion)
 	{	
@@ -52,13 +44,13 @@ class Estacionamiento
 		$PdoST->execute();
 	}
 	//Incrementa la cantidad de veces que fue usada una cochera
-	public static function IncrementarBaseDatos($obj)
+	/*public static function IncrementarBaseDatos($obj)
 	{
 		$Pdo = new PDO("mysql:host=localhost;dbname=tp-estacionamiento","root","");
 		$PdoST = $Pdo->prepare("UPDATE estacionamiento SET Cantidad =Cantidad + 1 WHERE Cochera = :numero");
 		$PdoST->bindParam(":numero",$obj->getNumero());
 		$PdoST->execute();
-	}
+	}*/
 	//Retorna un listado con todas las cocheras del estacionamiento
     public static function TraerTodasLasCocheras()
 	{
@@ -69,7 +61,7 @@ class Estacionamiento
     	$PdoST->execute();
 		foreach($PdoST as $registro) //devuelve los valores de la base fila por fila
 		{	
-			$ListaCocheras[] = new Estacionamiento($registro['Piso'],$registro['Cochera'],$registro['Condicion'],$registro['Estado'],$registro['Cantidad']);
+			$ListaCocheras[] = new Estacionamiento($registro['Piso'],$registro['Cochera'],$registro['Condicion'],$registro['Estado']);
 		}
 		return $ListaCocheras;
 	}
@@ -83,7 +75,7 @@ class Estacionamiento
     	$PdoST->execute();
 		foreach($PdoST as $registro) //devuelve los valores de la base fila por fila
 		{	
-			$ListaCocheras[] = new Estacionamiento($registro['Piso'],$registro['Cochera'],$registro['Condicion'],$registro['Estado'],$registro['Cantidad']);
+			$ListaCocheras[] = new Estacionamiento($registro['Piso'],$registro['Cochera'],$registro['Condicion'],$registro['Estado']);
 		}
 		return $ListaCocheras;
 	}
@@ -97,7 +89,7 @@ class Estacionamiento
     	$PdoST->execute();
 		foreach($PdoST as $registro) //devuelve los valores de la base fila por fila
 		{	
-			$ListaCocheras[] = new Estacionamiento($registro['Piso'],$registro['Cochera'],$registro['Condicion'],$registro['Estado'],$registro['Cantidad']);
+			$ListaCocheras[] = new Estacionamiento($registro['Piso'],$registro['Cochera'],$registro['Condicion'],$registro['Estado']);
 		}
 		return $ListaCocheras;
 	}
@@ -110,7 +102,7 @@ class Estacionamiento
 		$PdoST->execute();
 		foreach($PdoST as $registro) //devuelve los valores de la base fila por fila
 		{	
-			$ListaCocheras[] = new Estacionamiento($registro['Piso'],$registro['Cochera'],$registro['Condicion'],$registro['Estado'],$registro['Cantidad']);
+			$ListaCocheras[] = new Estacionamiento($registro['Piso'],$registro['Cochera'],$registro['Condicion'],$registro['Estado']);
 		}
 		return $ListaCocheras;
 	}
@@ -170,14 +162,14 @@ class Estacionamiento
 		return $numero;
 	}
 	//Al finalizar el dia resetea las cantidades de uso del estacionamiento
-	public static function Reset($array)
+	/*public static function Reset($array)
 	{
 		$Pdo = new PDO("mysql:host=localhost;dbname=tp-estacionamiento","root","");
 		$PdoST1 = $Pdo->prepare("UPDATE estacionamiento SET Cantidad= 0 WHERE Estado = 'Disponible'");
 		$PdoST1->execute();
 		$PdoST2 = $Pdo->prepare("UPDATE estacionamiento SET Cantidad= 1 WHERE Estado = 'Ocupado'");
 		$PdoST2->execute();
-	}
+	}*/
 
 }
 

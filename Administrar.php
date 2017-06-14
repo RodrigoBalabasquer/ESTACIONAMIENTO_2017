@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html>
     <head>
@@ -24,7 +23,7 @@
                 .done(function(resultado)
                 {	
                     //$("#div").html(resultado);
-                    window.location.href ="index.html";
+                    window.location.href ="index.php";
                 })
                 .fail(function (jqXHR, textStatus, errorThrown)
                 {

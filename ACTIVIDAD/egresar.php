@@ -50,7 +50,7 @@
                     })
                     .fail(function (jqXHR, textStatus, errorThrown)
                     {
-                        alert(jqXHR.responseText + "\n" + textStatus + "\n" + errorThrown);
+                        $("#lista").html(jqXHR.responseText + "\n" + textStatus + "\n" + errorThrown);
                     });
                 }
             }

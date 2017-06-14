@@ -42,11 +42,9 @@
 		</div>
 		<form action="Lista.php" method="post" >
 		<div class="CajaInicio animated bounceInRight">
-			<input type="text" class="form-control" name="Nombre" id="nombre" placeholder="Ingrese nombre" required/>
+			<input type="text" class="form-control" name="Legajo" id="legajo" placeholder="Ingrese Legajo" required/>
 			<br>
-			<input type="text" class="form-control" name="Dni" id="dni" minlength="7" maxlength="8" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" placeholder="Ingrese DNI" required/>
-			<br>
-			<input type="submit" class="btn btn-primary" name="despedir" value="Despedir" id="submit"/>
+			<input type="submit" class="btn btn-primary" name="mostrar" value="Mostrar Datos" id="submit"/>
 		</form>
 
 		<?php
@@ -73,9 +71,9 @@
 
         //4.- INVOCAMOS AL METODO SOAP, PASANDOLE EL PARAMETRO DE ENTRADA
                 $result = array();
-                if(isset($_POST['despedir']))
+                if(isset($_POST['mostrar']))
                 {
-                    $result = $client->call('Listar',array($_POST["Nombre"],$_POST["Dni"]));
+                    $result = $client->call('Listar',array($_POST["Legajo"]));
                 
                 
 

@@ -57,7 +57,7 @@
 			<br>
 			<input type="text" class="form-control" name="Dni" id="dni" minlength="7" maxlength="8" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" placeholder="Ingrese DNI" required/>
 			<br>
-			<input type="text" class="form-control" name="Edad" id="edad" placeholder="Ingrese edad" required/>
+			<input type="number" class="form-control" name="Edad" id="edad" min="18" placeholder="Ingrese edad" required/>
 			<br>
 			<!--<input type="button" class="btn btn-primary" value="Agregar" onclick="guardar()" />-->
 			<input type="submit" class="btn btn-primary" name="Ingresar" value="Agregar" id="submit"/>

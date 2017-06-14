@@ -5,9 +5,10 @@
 	  
 		<meta charset="UTF-8">
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
         <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+       
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
         
         <script type="text/javascript">
@@ -71,12 +72,13 @@
                     })
                     .done(function(resultado)
                     {	
-                        window.location.href = "ingresar.php"
-                        
+                        alert(resultado);
+                        window.location.href = "../Administrar.php";
+                        //$("#div").html(resultado);
                     })
                     .fail(function (jqXHR, textStatus, errorThrown)
                     {
-                        alert(jqXHR.responseText + "\n" + textStatus + "\n" + errorThrown);
+                        $("#div").html(jqXHR.responseText + "\n" + textStatus + "\n" + errorThrown);
                     });
                     
                 }
@@ -120,6 +122,8 @@
                 <br>
                 <input type="submit" onclick="Ocupar()" class="btn btn-primary" value="Ocupar cochera seleccionada" id="submit"/>
             </form>
+            <div id='div'>
+            <div>
     </div>
 	
 </body>

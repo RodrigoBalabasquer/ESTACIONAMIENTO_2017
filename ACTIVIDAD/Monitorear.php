@@ -64,14 +64,21 @@
     if($_SESSION != null)
     {
         
-    	echo '<a class="btn btn-info" href="../Trabajar.php">Menu principal</a>';
+    	if($_SESSION["Nivel"] == 1)
+		{
+			echo '<a class="btn btn-info" href="../Administrar.php">Menu principal</a>';
+		}
+		if($_SESSION["Nivel"] == 0)
+		{
+			echo '<a class="btn btn-info" href="../Trabajar.php">Menu principal</a>';
+		}
     ?>
     
 	<div class="container">
 	 <form id="formulario" action="" method="post" onsubmit="return false;">
 		<div class="page-header">
 			<h1>Ingrese Fecha</h1>
-            <input type="date" class="form-control" min="2017-05-28"  id="fecha"  required>  
+            <input type="date" class="form-control" min="2017-05-26"  id="fecha"  required>  
             <br>
             <input type="submit" value="Aceptar" class="btn btn-primary btn-lg" onclick="Mostrar()">    
 		</div>

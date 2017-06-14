@@ -45,9 +45,7 @@
 		<form action="suspender.php" method="post" >
 		<div class="CajaInicio animated bounceInRight">
 		<!--<form id="formulario" action="" method="post" onsubmit="return false;">-->
-			<input type="text" class="form-control" name="Nombre" id="nombre" placeholder="Ingrese nombre" required/>
-			<br>
-			<input type="text" class="form-control" name="Dni" id="dni" minlength="7" maxlength="8" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" placeholder="Ingrese DNI" required/>
+			<input type="text" class="form-control" name="Legajo" id="legajo" placeholder="Ingrese Legajo" required/>
 			<br>
 			<input type="submit" class="btn btn-primary" name="Suspender" value="Suspender" id="submit"/>
 		</form>
@@ -78,7 +76,7 @@
                 $result = array();
                 if(isset($_POST['Suspender']))
                 {
-                    $result = $client->call('Suspender',array($_POST["Nombre"],$_POST["Dni"]));
+                    $result = $client->call('Suspender',array($_POST["Legajo"]));
                 
                 
 
