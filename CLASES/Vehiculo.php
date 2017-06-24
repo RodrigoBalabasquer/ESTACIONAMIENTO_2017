@@ -9,8 +9,9 @@ class Vehiculo
     private $Operacion;
     private $Pago;
     private $Cochera;
+    private $Foto;
 
-    public function __construct($patente,$color,$marca,$fecha,$operacion,$pago,$cochera)
+    public function __construct($patente,$color,$marca,$fecha,$operacion,$pago,$cochera,$foto)
 	{
 		$this->Patente = $patente;
 		$this->Color = $color;
@@ -19,6 +20,7 @@ class Vehiculo
         $this->Operacion= $operacion;
         $this->Pago = $pago;
         $this->Cochera = $cochera;
+        $this->Foto = $foto;
 	}
 
     //Propiedades
@@ -51,11 +53,15 @@ class Vehiculo
     {
         return $this->Cochera;
     }
+    public function getFoto()
+    {
+        return $this->Foto;
+    }
     //Guarda un vehiculo en la base de datos
     public static function GuardarBaseDatos($obj)
 	{	
 		$Pdo = new PDO("mysql:host=localhost;dbname=tp-estacionamiento","root","");
-        $PdoST = $Pdo->prepare("INSERT INTO vehiculos(Patente,Color,Marca,Fecha,Operacion,Pago,Cochera) VALUES (:patente,:color,:marca,:fecha,:operacion,:pago,:cochera)");
+        $PdoST = $Pdo->prepare("INSERT INTO vehiculos(Patente,Color,Marca,Fecha,Operacion,Pago,Cochera,Foto) VALUES (:patente,:color,:marca,:fecha,:operacion,:pago,:cochera,:foto)");
         $PdoST->bindParam(":patente",$obj->getPatente());
         $PdoST->bindParam(":color",$obj->getColor());
         $PdoST->bindParam(":marca",$obj->getMarca());
@@ -63,6 +69,7 @@ class Vehiculo
         $PdoST->bindParam(":operacion",$obj->getOperacion());
         $PdoST->bindParam(":pago",$obj->getPago());
         $PdoST->bindParam(":cochera",$obj->getCochera());
+        $PdoST->bindParam(":foto",$obj->getFoto());
         $PdoST->execute();
 	}
     //Registra que un vehiculo termino su ingreso y fue retirado del estacionamiento
@@ -103,7 +110,7 @@ class Vehiculo
         $ListaVehiculos = array();
 		foreach($PdoST as $registro) //devuelve los valores de la base fila por fila
 		{	
-			$ListaVehiculos[] = new Vehiculo($registro['Patente'],$registro['Color'],$registro['Marca'],$registro["Fecha"],$registro["Operacion"],$registro['Pago'],$registro['Cochera']);
+			$ListaVehiculos[] = new Vehiculo($registro['Patente'],$registro['Color'],$registro['Marca'],$registro["Fecha"],$registro["Operacion"],$registro['Pago'],$registro['Cochera'],$registro['Foto']);
 		}
 		return $ListaVehiculos;
 	}
@@ -117,7 +124,7 @@ class Vehiculo
         $ListaVehiculos = array();
 		foreach($PdoST as $registro) //devuelve los valores de la base fila por fila
 		{	
-			$ListaVehiculos[] = new Vehiculo($registro['Patente'],$registro['Color'],$registro['Marca'],$registro["Fecha"],$registro["Operacion"],$registro['Pago'],$registro['Cochera']);
+			$ListaVehiculos[] = new Vehiculo($registro['Patente'],$registro['Color'],$registro['Marca'],$registro["Fecha"],$registro["Operacion"],$registro['Pago'],$registro['Cochera'],$registro['Foto']);
 		}
 		return $ListaVehiculos;
 	}

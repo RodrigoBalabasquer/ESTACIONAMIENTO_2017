@@ -5,38 +5,57 @@
 		<meta charset="UTF-8">
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 		<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-        <script type="text/javascript">
-			//Reabilita a un empleado
-            /*function Reabilitar(valor)
-            {   
-                var opcion = "Reabilitar";
-				$.ajax(
-			{
-				type: 'PUT',
-				url: '../API-REST/ApiRest.php/personal',
-				dataType: 'text',
-                data:"Legajo="+valor+"&opcion="+opcion,
-				async:true
-			})
-			.done(function(resultado)
-			{	
-				$("#div").html(resultado);
-                window.location.href = "../Administrar.php";
-            })
-			.fail(function (jqXHR, textStatus, errorThrown)
-            {
-			    //alert(jqXHR.responseText + "\n" + textStatus + "\n" + errorThrown);
-				$("#div").html(jqXHR.responseText+"\n"+textStatus+"\n"+errorThrown);
-			});
-
-            }*/
-        
-        </script>
+        <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="../estilo.css">
  </head>
 <body>
-	<a class="btn btn-info" href="../Administrar.php">Menu principal</a>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <!-- El logotipo y el icono que despliega el menú se agrupan
+                para mostrarlos mejor en los dispositivos móviles -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Desplegar navegación</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Home</a>
+            </div>
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="../Administrar.php">Menu principal</a></li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown">
+                            Empleados<b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="./alta.php">Ingreso empleado</a></li>
+                            <li><a href="./despedir.php">Despido empleado</a></li>
+                            <li><a href="./suspender.php">Suspencion empleado</a></li>
+                            <li><a href="./Lista.php">Busqueda de empleado</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown">
+                            Vehiculos<b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="./ingresar.php">Ingreso vehiculo</a></li>
+                            <li><a href="./egresar.php">Retiro de vehiculo</a></li>
+                            <li><a href="./Monitorear.php">Busqueda de actividades</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                <?php
+                   session_start();
+                   echo '<li><a href="#"><span class="glyphicon glyphicon-user center-block" style="width:200px;">'." ".$_SESSION['Apellido']." ".$_SESSION['Nombre'].'</a></li>';
 
+                ?>
+                </ul>
+            </div>
+    </nav>
+	<br>
 	<div class="container">
 	
 		<div class="page-header">
@@ -96,7 +115,7 @@
                     } 
                     else 
                     {//MOSTRAMOS EL RESULTADO DEL METODO DEL WS.
-                        echo '<pre>'.$result.'</pre>';
+                        echo '<h2>'.$result.'</h2>';
                     }
                 }
                 }

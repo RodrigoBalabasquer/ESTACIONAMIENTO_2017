@@ -17,8 +17,8 @@ caption {
 }
 
 .CajaInicio {
-  width:750px;
-  margin:0 auto;
+  width:850px;
+  margin:0;
   margin-top:8px;
   margin-bottom:2%;
   transition:opacity 1s;
@@ -34,41 +34,45 @@ caption {
   color:#fff;
 }
 
-.CajaInicio span{
-  font-size:140%;
-  background:rgb(14, 26, 112);
-  color:#fff;
-  -moz-border-radius:7px;
-  -webkit-border-radius:7px;
-  border-radius:7px;
-  transition:background .3s;
-  -webkit-transition:background .3s;
-  
-}
+
+
+
 form { 
-  background:#f0f0f0;
-  padding:6% 4%;
+  background:#3f51b5;
+  padding:6% 1%;
 }
 
-input[type="text"], input[type="file"]{
-  width:90%;
+input[type="text"]input[type="number"]{
+  width:100%;
   background:#fff;
   margin-bottom:4%;
-  margin-left:5%;
+  margin-left:0%;
   margin-right:5%;
   border:1px solid #ccc;
-  padding-right:4%;
+  padding-right:40%;
   font-family:'Open Sans',sans-serif;
-  font-size:200%;
-  color:#555;
+  font-size:300%;
+  color:black;
 }
 
+input[type="submit"]
+{
+  display:block;
+  text-transform: capitalize;
+  border:hidden;
+  width:25%;
+  height: 75px;
+}
+input[type="submit"]:hover
+{
+  background:#1BA045;
+}
 .MiBotonUTN {
   display:block;
   text-transform: capitalize;
   border:hidden;
-  width:100%;
-  background: silver;
+  width:50%;
+  background:silver;
   margin:0 auto;
   margin-top:1%;
   padding:10px;
@@ -85,21 +89,6 @@ input[type="text"], input[type="file"]{
 
 .MiBotonUTN:hover{
   background:#1BA045;
-}
-
-.CajaInicio table{
-  width:45%;
-  margin:0 auto;
-  margin-top:1px;
-  margin-bottom:2%;
-  background:#f5a0bb;
-  color: rgb(14, 26, 112);
-
-}
-.CajaInicio td{
-	margin:auto;
-	margin-left:0%;
-	text-align:right;
 }
 
 caption {

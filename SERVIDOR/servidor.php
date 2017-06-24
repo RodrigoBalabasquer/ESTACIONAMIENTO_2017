@@ -29,7 +29,9 @@ $server->wsdl->addComplexType(
                                           'Fecha' => array('name' => 'Fecha', 'type' => 'xsd:string'),
                                           'Nivel' => array('name' => 'Nivel', 'type' => 'xsd:int'),
 										  'Cantidad' => array('name' => 'Cantidad', 'type' => 'xsd:int'),
-										  'ID' => array('name' => 'ID', 'type' => 'xsd:string')
+										  'ID' => array('name' => 'ID', 'type' => 'xsd:string'),
+                                          'Nombre' => array('name' => 'Nombre', 'type' => 'xsd:string'),
+                                          'Apellido' => array('name' => 'Apellido', 'type' => 'xsd:string')
 									)
 								);
 
@@ -136,17 +138,17 @@ $server->wsdl->addComplexType(
                     $turno = "";
                     if($Horario["hours"] >= 6 && $Horario["hours"] <12)
                     {   
-                        $turno = "mañana";
+                        $turno = "M";
                         $PdoST1->bindParam(":turno",$turno);
                     }
                     if($Horario["hours"] >= 12 && $Horario["hours"] <19)
                     {   
-                        $turno = "tarde";
+                        $turno = "T";
                         $PdoST1->bindParam(":turno",$turno);
                     }
                     if($Horario["hours"] >= 19 || $Horario["hours"] <6)
                     {   
-                        $turno = "noche";
+                        $turno = "N";
                         $PdoST1->bindParam(":turno",$turno);
                     }
                     if($resultado == "Aministrador")
@@ -179,17 +181,19 @@ $server->wsdl->addComplexType(
 		}
         if($resultado != "Despedido" && $resultado != "Suspendido" && $resultado != "No encontrado")
         {
-                return array('Mensaje' => $resultado,'Legajo' => $per->getLegajo(),'Turno' => $turno,'Fecha' => $fecha,'Nivel' => $per->getNivel(),'Cantidad'=>0,'ID'=>$ID);
+                return array('Mensaje' => $resultado,'Legajo' => $per->getLegajo(),'Turno' => $turno,'Fecha' => $fecha,'Nivel' => $per->getNivel(),'Cantidad'=>0,'ID'=>$ID,'Nombre'=>$per->getNombre(),'Apellido'=>$per->getApellido());
 	    }
         else
         {
-                return array('Mensaje' => $resultado,'Legajo' => 0,'Turno' => "zx",'Fecha' => "0000-00-00",'Nivel' => 0,'Cantidad'=>0,'ID'=>"0");
+                return array('Mensaje' => $resultado,'Legajo' => 0,'Turno' => "zx",'Fecha' => "0000-00-00",'Nivel' => 0,'Cantidad'=>0,'ID'=>"0",'Nombre'=>"",'Apellido'=>"");
         }
 	}
     function Contratar($Nombre,$Apellido,$Dni,$Edad)
     {
         $contrasenia = $Dni;
         $usuario = $Dni;
+        $Nombre = ucwords(strtolower($Nombre));
+        $Apellido = ucwords(strtolower($Apellido));
         if(Personal::Validar($Dni))
         {
             $p = new Personal($usuario,$Nombre,$Apellido,$Dni,null,$contrasenia,$Edad,"Activo",0);
@@ -221,9 +225,16 @@ $server->wsdl->addComplexType(
         else
         {	
             if($ArrayEmpleados[$indice]->getEstado() == 'Activo')
-            {
-                Personal::ModificarBaseDatos($ArrayEmpleados[$indice],"Suspendido");
-                return 'Empleado Suspendido';
+            {   
+                if($ArrayEmpleados[$indice]->getNivel() == 0)
+                {
+                    Personal::ModificarBaseDatos($ArrayEmpleados[$indice],"Suspendido");
+                    return 'Empleado Suspendido';
+                }
+                else
+                {
+                    return"No tiene autorizacion para despedir al empleado";
+                }
             }
             else
             {
@@ -231,6 +242,7 @@ $server->wsdl->addComplexType(
             }
         }
     }
+    //Cambia el estado del empleado que coincida con el legajo ingresado a activo
     function Reabilitar($Legajo)
     {
         $ArrayEmpleados = Personal::TraerTodosLosEmpleados();
@@ -243,9 +255,16 @@ $server->wsdl->addComplexType(
         else
         {	
             if($ArrayEmpleados[$indice]->getEstado() == 'Suspendido')
-            {
-                Personal::ModificarBaseDatos($ArrayEmpleados[$indice],"Activo");
-                return 'Empleado Reabilitado';
+            {   
+                if($ArrayEmpleados[$indice]->getNivel() == 0)
+                {
+                    Personal::ModificarBaseDatos($ArrayEmpleados[$indice],"Activo");
+                    return 'Empleado Reabilitado';
+                }
+                else
+                {
+                    return"No tiene autorizacion para reabilitar al empleado";
+                }
             }
             else
             {   
@@ -260,6 +279,7 @@ $server->wsdl->addComplexType(
             }
         }
     }
+    //Cambia el estado del empleado que coincida con el legajo ingresado a despedido
     function Despedir($Legajo)
     {
         $ArrayEmpleados = Personal::TraerTodosLosEmpleados();
@@ -273,8 +293,15 @@ $server->wsdl->addComplexType(
         {	
             if($ArrayEmpleados[$indice]->getEstado() != 'Despedido')
             {
-                Personal::ModificarBaseDatos($ArrayEmpleados[$indice],"Despedido");
-                return 'Empleado Despedido';
+                if($ArrayEmpleados[$indice]->getNivel() == 0)
+                {
+                    Personal::ModificarBaseDatos($ArrayEmpleados[$indice],"Despedido");
+                    return 'Empleado Despedido';
+                }
+                else
+                {
+                    return"No tiene autorizacion para despedir al empleado";
+                }
             }
             else
             {   
@@ -296,12 +323,48 @@ $server->wsdl->addComplexType(
             $datosEmpleado = Empleado:: ObtenerDatosEmpleado($ArrayEmpleados[$indice]->getLegajo());
             if(count($datosEmpleado)!=0)
             {
-                $mensaje ="El empleado ".$ArrayEmpleados[$indice]->getNombre()." ".$ArrayEmpleados[$indice]->getApellido()." se conecto los siguientes dias:<br>";
+                /*$mensaje ="El empleado ".$ArrayEmpleados[$indice]->getNombre()." ".$ArrayEmpleados[$indice]->getApellido()." se conecto los siguientes dias:<br>";
                 foreach($datosEmpleado as $dato)
                 {
                     $mensaje.= $dato->getFecha()." y realizo ".$dato->getCantidad()." operaciones<br>";
                 }
-                $mensaje.="Actualmente se encuentra ".$ArrayEmpleados[$indice]->getEstado();
+                $mensaje.="Actualmente se encuentra ".$ArrayEmpleados[$indice]->getEstado();*/
+                $mensaje = "<h2>Datos del empleado ".$ArrayEmpleados[$indice]->getNombre()." ".$ArrayEmpleados[$indice]->getApellido().":</h2><br>";
+                $Tabla ="<table class='table' border='1'>
+                <thead>
+                    <tr>
+                        <th>  Fecha de ingreso</th>
+                        <th>  Turno </th>
+                        <th>  Cantidad de operaciones</th>
+                     </tr> 
+                </thead>";
+                foreach($datosEmpleado as $dato)
+                {   
+                    $turno;
+                    $clase;
+                    switch($dato->getTurno())
+                    {
+                        case"M":
+                            $turno = "Mañana";
+                            $clase = 'bg-primary';
+                            break;
+                        case"T":
+                            $turno = "Tarde";
+                            $clase = 'bg-primary';
+                            break;
+                        case"N":
+                            $turno = "Noche";
+                            $clase = 'bg-primary';
+                            break;
+                    }
+                    $Tabla.=" <tr>
+                    <td>".$dato->getFecha()."</td>
+					<td>".$turno."</td>
+					<td>".$dato->getCantidad()."</td>
+                    </tr>";
+                }
+                $Tabla.="</table>";
+                $mensaje.=$Tabla;
             }
             else
             {
